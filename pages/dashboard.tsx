@@ -6,19 +6,28 @@ import Layout from '../components/Layout'
 export default function Dashboard() {
   const router = useRouter()
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session?.user) {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession()
+
+      if (!session || !session.user) {
         router.push('/login')
       } else {
         setUser(session.user)
       }
-    }
-    getUser()
-  }, [])
 
+      setLoading(false)
+    }
+
+    getUser()
+  }, [router])
+
+  if (loading) return <div style={{ textAlign: 'center', marginTop: '4rem' }}>Lade Dashboard...</div>
   if (!user) return null
 
   return (
