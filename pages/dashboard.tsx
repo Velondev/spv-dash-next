@@ -36,7 +36,15 @@ export default function Dashboard() {
     { icon: 'fa-star', label: 'Feedback', href: '/feedback' },
     { icon: 'fa-chart-line', label: 'Analyse', href: '/analyse' },
   ]
+  
+  const STRAVA_CLIENT_ID = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID
+  const REDIRECT_URI = process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI
 
+  const handleStravaLogin = () => {
+    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${STRAVA_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=read,activity:read_all`
+    window.location.href = stravaAuthUrl
+  }
+  
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 py-6">
@@ -84,7 +92,18 @@ export default function Dashboard() {
                 <h3 className="text-lg font-semibold text-gray-800">{item.label}</h3>
               </div>
             </Link>
-          ))}
+            ))}
+          </div>
+
+        {/* Strava Connect Button */}
+        <div className="text-center">
+          <button
+            onClick={handleStravaLogin}
+            className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded shadow inline-flex items-center gap-2"
+          >
+            <i className="fab fa-strava text-xl"></i>
+            Strava verbinden
+          </button>
         </div>
       </div>
     </Layout>
