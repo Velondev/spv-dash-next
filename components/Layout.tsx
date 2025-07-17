@@ -94,6 +94,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   {/* Page Content */}
   <main className="p-6 overflow-auto">{children}</main>
-</div>
+      </div>
+    </div>
   )
 }
