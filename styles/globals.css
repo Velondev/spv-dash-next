@@ -60,7 +60,8 @@
 }
 
 /* Dark mode variables */
-/* @media (prefers-color-scheme: dark) { */
+/*
+@media (prefers-color-scheme: dark) {
   :root {
     --background: 220 27% 8%;
     --foreground: 220 9% 98%;
@@ -71,33 +72,31 @@
     --popover: 220 27% 8%;
     --popover-foreground: 220 9% 98%;
     
-    --primary: 153 52% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 220 9% 98%;
+    --primary-foreground: 220 27% 8%;
     
     --secondary: 220 27% 12%;
     --secondary-foreground: 220 9% 98%;
     
-    --muted: 153 20% 18%;
-    --muted-foreground: 153 20% 85%;
+    --muted: 220 27% 12%;
+    --muted-foreground: 220 9% 64%;
     
-    --accent: 153 30% 25%;
-    --accent-foreground: 153 20% 90%;
+    --accent: 220 27% 12%;
+    --accent-foreground: 220 9% 98%;
     
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 220 9% 98%;
     
-    --border: 153 20% 18%;
-    --input: 153 20% 18%;
-    --ring: 153 40% 60%;
+    --border: 220 27% 12%;
+    --input: 220 27% 12%;
+    --ring: 220 9% 83%;
     
-    /* Dark mode chart colors */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     
-    /* Dark mode shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
@@ -105,6 +104,8 @@
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
   }
 }
+*/
+
 
 /* ===== BASE LAYER ===== */
 @layer base {
