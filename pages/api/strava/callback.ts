@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const response = await axios.post('https://www.strava.com/oauth/token', {
       client_id: process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID,
-      client_secret: process.env.NEXT_PUBLIC_STRAVA_CLIENT_SECRET,
+      client_secret: process.env.STRAVA_CLIENT_SECRET,
       code,
       grant_type: 'authorization_code',
     })
