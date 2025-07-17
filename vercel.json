@@ -1,10 +1,8 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
   "framework": "nextjs",
-  "installCommand": "npm install",
+  "buildCommand": "npm run build",
   "devCommand": "npm run dev",
-  "regions": ["iad1"],
+  "installCommand": "npm install",
   "functions": {
     "pages/api/**/*.ts": {
       "runtime": "nodejs18.x"
@@ -27,15 +25,6 @@
           "value": "strict-origin-when-cross-origin"
         }
       ]
-    },
-    {
-      "source": "/static/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
     }
   ],
   "redirects": [
@@ -44,9 +33,5 @@
       "destination": "/",
       "permanent": true
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
-
