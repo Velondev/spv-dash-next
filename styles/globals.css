@@ -246,12 +246,13 @@
   }
   
   /* Background decorations */
-  .bg-decoration-1 {
-    @apply absolute -bottom-24 -left-24 w-80 h-80 bg-border rounded-full opacity-20;
-  }
-  
-  .bg-decoration-2 {
-    @apply absolute -top-16 -right-16 w-80 h-80 bg-muted rounded-full opacity-10;
+.bg-decoration-1 {
+  @apply absolute -bottom-24 -left-24 w-80 h-80 bg-green-300 rounded-full opacity-30;
+}
+
+.bg-decoration-2 {
+  @apply absolute -top-16 -right-16 w-80 h-80 bg-green-500 rounded-full opacity-20;
+}
   }
 }
 
