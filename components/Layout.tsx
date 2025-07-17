@@ -75,8 +75,25 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 p-6 overflow-auto">{children}</main>
+{/* Main content with header */}
+<div className="flex-1 bg-background text-foreground">
+  {/* Top Header */}
+  <header className="flex justify-between items-center px-6 py-4 border-b border-border shadow-sm">
+    <input
+      type="text"
+      placeholder="🔍 Search"
+      className="w-1/3 px-4 py-2 rounded-lg border border-input bg-muted text-foreground placeholder-gray-500"
+    />
+    <div className="flex items-center space-x-6">
+      <i className="fas fa-bell text-xl text-muted-foreground cursor-pointer"></i>
+      <div className="w-10 h-10 bg-muted text-center leading-10 rounded-full font-bold text-lg text-foreground">
+        P
+      </div>
     </div>
+  </header>
+
+  {/* Page Content */}
+  <main className="p-6 overflow-auto">{children}</main>
+</div>
   )
 }
