@@ -118,13 +118,6 @@ module.exports = {
         '88': '22rem',
         '128': '32rem',
       },
-      boxShadow: {
-        'custom-sm': 'var(--shadow-sm)',
-        'custom': 'var(--shadow)',
-        'custom-md': 'var(--shadow-md)',
-        'custom-lg': 'var(--shadow-lg)',
-        'custom-xl': 'var(--shadow-xl)',
-      },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
@@ -190,105 +183,7 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    // Add custom plugin for component utilities
-    function({ addUtilities, addComponents, theme }) {
-      // Add custom utilities
-      addUtilities({
-        '.text-balance': {
-          'text-wrap': 'balance',
-        },
-        '.text-pretty': {
-          'text-wrap': 'pretty',
-        },
-        '.scrollbar-hide': {
-          '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none',
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
-        },
-        '.scrollbar-default': {
-          '-ms-overflow-style': 'auto',
-          'scrollbar-width': 'auto',
-          '&::-webkit-scrollbar': {
-            display: 'block',
-          },
-        },
-      });
-
-      // Add custom components
-      addComponents({
-        '.btn': {
-          padding: `${theme('spacing.2')} ${theme('spacing.4')}`,
-          borderRadius: theme('borderRadius.md'),
-          fontWeight: theme('fontWeight.medium'),
-          fontSize: theme('fontSize.sm'),
-          lineHeight: theme('lineHeight.5'),
-          transition: 'all 0.2s ease-in-out',
-          cursor: 'pointer',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          '&:focus': {
-            outline: 'none',
-            boxShadow: `0 0 0 2px ${theme('colors.ring')}`,
-          },
-          '&:disabled': {
-            opacity: theme('opacity.50'),
-            cursor: 'not-allowed',
-          },
-        },
-        '.btn-primary': {
-          backgroundColor: theme('colors.primary.DEFAULT'),
-          color: theme('colors.primary.foreground'),
-          '&:hover:not(:disabled)': {
-            backgroundColor: theme('colors.chart.3'),
-            transform: 'translateY(-1px)',
-            boxShadow: theme('boxShadow.custom-lg'),
-          },
-          '&:active:not(:disabled)': {
-            transform: 'translateY(0)',
-            boxShadow: theme('boxShadow.custom'),
-          },
-        },
-        '.btn-secondary': {
-          backgroundColor: theme('colors.secondary.DEFAULT'),
-          color: theme('colors.secondary.foreground'),
-          '&:hover:not(:disabled)': {
-            backgroundColor: theme('colors.secondary.DEFAULT'),
-            opacity: theme('opacity.80'),
-          },
-        },
-        '.input': {
-          width: '100%',
-          padding: `${theme('spacing.2')} ${theme('spacing.3')}`,
-          fontSize: theme('fontSize.sm'),
-          lineHeight: theme('lineHeight.5'),
-          color: theme('colors.foreground'),
-          backgroundColor: theme('colors.background'),
-          border: `1px solid ${theme('colors.input')}`,
-          borderRadius: theme('borderRadius.md'),
-          transition: 'all 0.2s ease-in-out',
-          '&:focus': {
-            outline: 'none',
-            borderColor: theme('colors.ring'),
-            boxShadow: `0 0 0 2px ${theme('colors.ring')}`,
-          },
-          '&::placeholder': {
-            color: theme('colors.muted.foreground'),
-          },
-        },
-        '.card': {
-          backgroundColor: theme('colors.card.DEFAULT'),
-          color: theme('colors.card.foreground'),
-          borderRadius: theme('borderRadius.lg'),
-          border: `1px solid ${theme('colors.border')}`,
-          boxShadow: theme('boxShadow.custom'),
-        },
-      });
-    },
-  ],
+  plugins: [],
   // Optimize for production
   corePlugins: {
     preflight: true,
@@ -298,3 +193,4 @@ module.exports = {
     hoverOnlyWhenSupported: true,
   },
 }
+
