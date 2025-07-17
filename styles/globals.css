@@ -17,29 +17,29 @@
   --popover-foreground: 0 0% 3.9%;
   
   /* Primary brand colors - Enhanced for SPVL branding */
-  --primary: 220 14% 96%;
-  --primary-foreground: 220 9% 46%;
+  --primary: 153 52% 52%;
+  --primary-foreground: 0 0% 100%;
   
   /* Secondary colors */
   --secondary: 220 14% 96%;
   --secondary-foreground: 220 9% 46%;
   
   /* Muted colors */
-  --muted: 220 14% 96%;
-  --muted-foreground: 220 9% 46%;
+  --muted: 153 44% 92%;
+  --muted-foreground: 153 20% 25%;
   
   /* Accent colors */
-  --accent: 220 14% 96%;
-  --accent-foreground: 220 9% 46%;
+  --accent: 153 60% 45%;
+  --accent-foreground: 0 0% 100%;
   
   /* Destructive/Error colors */
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
   
   /* Border and input colors */
-  --border: 220 13% 91%;
-  --input: 220 13% 91%;
-  --ring: 220 9% 46%;
+  --border: 153 30% 80%;
+  --input: 153 30% 80%;
+  --ring: 153 52% 52%;
   
   /* Chart colors - Optimized for data visualization */
   --chart-1: 12 76% 61%;    /* Orange - Performance metrics */
@@ -71,24 +71,24 @@
     --popover: 220 27% 8%;
     --popover-foreground: 220 9% 98%;
     
-    --primary: 220 9% 98%;
-    --primary-foreground: 220 27% 8%;
+    --primary: 153 52% 45%;
+    --primary-foreground: 0 0% 100%;
     
     --secondary: 220 27% 12%;
     --secondary-foreground: 220 9% 98%;
     
-    --muted: 220 27% 12%;
-    --muted-foreground: 220 9% 64%;
+    --muted: 153 20% 18%;
+    --muted-foreground: 153 20% 85%;
     
-    --accent: 220 27% 12%;
-    --accent-foreground: 220 9% 98%;
+    --accent: 153 30% 25%;
+    --accent-foreground: 153 20% 90%;
     
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 220 9% 98%;
     
-    --border: 220 27% 12%;
-    --input: 220 27% 12%;
-    --ring: 220 9% 83%;
+    --border: 153 20% 18%;
+    --input: 153 20% 18%;
+    --ring: 153 40% 60%;
     
     /* Dark mode chart colors */
     --chart-1: 220 70% 50%;
@@ -246,13 +246,12 @@
   }
   
   /* Background decorations */
-.bg-decoration-1 {
-  @apply absolute -bottom-24 -left-24 w-80 h-80 bg-green-300 rounded-full opacity-30;
-}
-
-.bg-decoration-2 {
-  @apply absolute -top-16 -right-16 w-80 h-80 bg-green-500 rounded-full opacity-20;
-}
+  .bg-decoration-1 {
+    @apply absolute -bottom-24 -left-24 w-80 h-80 bg-border rounded-full opacity-20;
+  }
+  
+  .bg-decoration-2 {
+    @apply absolute -top-16 -right-16 w-80 h-80 bg-muted rounded-full opacity-10;
   }
 }
 
