@@ -2,77 +2,343 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== CSS VARIABLES ===== */
 :root {
+  /* Base colors */
   --background: 0 0% 100%;
   --foreground: 0 0% 3.9%;
+  
+  /* Card colors */
   --card: 0 0% 100%;
   --card-foreground: 0 0% 3.9%;
+  
+  /* Popover colors */
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 3.9%;
-  --primary: 0 0% 9%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 0 0% 96.1%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
+  
+  /* Primary brand colors - Enhanced for SPVL branding */
+  --primary: 220 14% 96%;
+  --primary-foreground: 220 9% 46%;
+  
+  /* Secondary colors */
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 220 9% 46%;
+  
+  /* Muted colors */
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  
+  /* Accent colors */
+  --accent: 220 14% 96%;
+  --accent-foreground: 220 9% 46%;
+  
+  /* Destructive/Error colors */
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
-  --ring: 0 0% 3.9%;
-  --chart-1: 12 76% 61%;
-  --chart-2: 173 58% 39%;
-  --chart-3: 197 37% 24%;
-  --chart-4: 43 74% 66%;
-  --chart-5: 27 87% 67%;
-  --radius: 0.5rem;
+  
+  /* Border and input colors */
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 220 9% 46%;
+  
+  /* Chart colors - Optimized for data visualization */
+  --chart-1: 12 76% 61%;    /* Orange - Performance metrics */
+  --chart-2: 173 58% 39%;   /* Teal - Heart rate zones */
+  --chart-3: 197 37% 24%;   /* Dark blue - Power data */
+  --chart-4: 43 74% 66%;    /* Yellow - Training load */
+  --chart-5: 27 87% 67%;    /* Red-orange - Recovery */
+  
+  /* Border radius */
+  --radius: 0.75rem;
+  
+  /* Shadows for depth */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
+/* Dark mode variables */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 220 27% 8%;
+    --foreground: 220 9% 98%;
+    
+    --card: 220 27% 8%;
+    --card-foreground: 220 9% 98%;
+    
+    --popover: 220 27% 8%;
+    --popover-foreground: 220 9% 98%;
+    
+    --primary: 220 9% 98%;
+    --primary-foreground: 220 27% 8%;
+    
+    --secondary: 220 27% 12%;
+    --secondary-foreground: 220 9% 98%;
+    
+    --muted: 220 27% 12%;
+    --muted-foreground: 220 9% 64%;
+    
+    --accent: 220 27% 12%;
+    --accent-foreground: 220 9% 98%;
+    
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --destructive-foreground: 220 9% 98%;
+    
+    --border: 220 27% 12%;
+    --input: 220 27% 12%;
+    --ring: 220 9% 83%;
+    
+    /* Dark mode chart colors */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    
+    /* Dark mode shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
   }
 }
 
+/* ===== BASE LAYER ===== */
 @layer base {
+  /* Reset and normalize */
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
-
+  
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Root element */
+  html {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-variation-settings: normal;
+    tab-size: 4;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Body styling */
   body {
     @apply bg-background text-foreground;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 100vh;
   }
-
-  input {
-    @apply bg-card text-card-foreground border-input;
+  
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
   }
-
+  
+  /* Form elements */
+  input, textarea, select {
+    @apply bg-background text-foreground border-input;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background outline-none border-ring;
+  }
+  
+  /* Button elements */
   button {
     @apply bg-primary text-primary-foreground;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+  
+  button:focus-visible {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+  
+  button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  
+  /* Links */
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+  
+  a:focus-visible {
+    @apply ring-2 ring-ring ring-offset-2 ring-offset-background outline-none;
+  }
+}
+
+/* ===== COMPONENT LAYER ===== */
+@layer components {
+  /* Login page specific styles */
+  .login-container {
+    @apply min-h-screen flex bg-background text-foreground;
+  }
+  
+  .login-brand-section {
+    @apply hidden md:flex w-1/2 bg-primary text-primary-foreground flex-col justify-center items-center px-10 relative overflow-hidden;
+  }
+  
+  .login-form-section {
+    @apply flex w-full md:w-1/2 justify-center items-center px-8;
+  }
+  
+  .login-card {
+    @apply bg-card text-card-foreground w-full max-w-md p-8 rounded-2xl border border-border;
+    box-shadow: var(--shadow-xl);
+  }
+  
+  .form-input {
+    @apply mt-1 w-full px-4 py-2 rounded-md border border-input bg-background text-foreground transition-colors duration-200;
+  }
+  
+  .form-input:focus {
+    @apply ring-ring border-ring;
+  }
+  
+  .btn-primary {
+    @apply w-full text-white py-2 px-4 rounded-md font-semibold transition-all duration-200 bg-primary;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    @apply bg-[hsl(var(--chart-3))];
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow);
+  }
+  
+  /* Chart color utilities */
+  .chart-1 { background-color: hsl(var(--chart-1)); }
+  .chart-2 { background-color: hsl(var(--chart-2)); }
+  .chart-3 { background-color: hsl(var(--chart-3)); }
+  .chart-4 { background-color: hsl(var(--chart-4)); }
+  .chart-5 { background-color: hsl(var(--chart-5)); }
+  
+  /* Icon containers */
+  .icon-container {
+    @apply w-12 h-12 rounded-full flex items-center justify-center text-2xl;
+  }
+  
+  /* Background decorations */
+  .bg-decoration-1 {
+    @apply absolute -bottom-24 -left-24 w-80 h-80 bg-border rounded-full opacity-20;
+  }
+  
+  .bg-decoration-2 {
+    @apply absolute -top-16 -right-16 w-80 h-80 bg-muted rounded-full opacity-10;
+  }
+}
+
+/* ===== UTILITY LAYER ===== */
+@layer utilities {
+  /* Custom shadow utilities */
+  .shadow-custom-sm { box-shadow: var(--shadow-sm); }
+  .shadow-custom { box-shadow: var(--shadow); }
+  .shadow-custom-md { box-shadow: var(--shadow-md); }
+  .shadow-custom-lg { box-shadow: var(--shadow-lg); }
+  .shadow-custom-xl { box-shadow: var(--shadow-xl); }
+  
+  /* Performance optimizations */
+  .will-change-transform { will-change: transform; }
+  .will-change-opacity { will-change: opacity; }
+  .will-change-auto { will-change: auto; }
+  
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  
+  /* Focus utilities */
+  .focus-ring {
+    @apply focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background focus:outline-none;
+  }
+  
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a, a:visited {
+    text-decoration: underline;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
