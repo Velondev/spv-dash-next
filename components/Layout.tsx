@@ -63,6 +63,15 @@ export default function Layout({ children }: { children: ReactNode }) {
               Logout
             </button>
           </div>
+          {/* ASK THE COACH Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          className="bg-chart-3 hover:bg-chart-3/80 text-white font-extrabold text-lg px-6 py-3 rounded-full shadow-custom-lg transition-all"
+          onClick={() => alert('Coach Chat öffnet sich hier später!')}
+        >
+          ASK THE COACH
+        </button>
+      </div>
         </div>
       </aside>
 
