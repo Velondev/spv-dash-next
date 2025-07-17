@@ -1,8 +1,20 @@
+import { ReactNode } from 'react'
 import Link from 'next/link'
-import { supabase } from '../utils/supabaseClient'
 import { useRouter } from 'next/router'
+import { supabase } from '../utils/supabaseClient'
 
-export default function Layout({ children }) {
+const sidebarLinks = [
+  { label: 'Dashboard', href: '/dashboard' },
+  { label: 'Training', href: '/training' },
+  { label: 'Events', href: '/events' },
+  { label: 'Analyse', href: '/analyse' },
+  { label: 'Kalender', href: '/kalender' },
+  { label: 'Inbox', href: '/inbox' },
+  { label: 'Community', href: '/community' },
+  { label: 'Nutrition', href: '/nutrition' },
+]
+
+export default function Layout({ children }: { children: ReactNode }) {
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -11,28 +23,51 @@ export default function Layout({ children }) {
   }
 
   return (
-    <div>
-      <nav style={styles.nav}>
-        <Link href="/dashboard" style={styles.link}>Dashboard</Link>
-        <Link href="/training" style={styles.link}>Training</Link>
-        <Link href="/feedback" style={styles.link}>Feedback</Link>
-        <button onClick={handleLogout} style={styles.logout}>Logout</button>
-      </nav>
-      <main style={{ padding: '2rem' }}>{children}</main>
+    <div className="flex min-h-screen bg-background text-foreground">
+      {/* Sidebar */}
+      <aside className="w-64 bg-gradient-to-b from-green-700 to-green-300 text-white p-6 flex flex-col justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold mb-8">SPVL AI Coaching</h1>
+          <nav className="space-y-4">
+            {sidebarLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <span
+                  className={`block py-1 px-2 rounded hover:bg-white hover:text-green-700 transition-all cursor-pointer ${
+                    router.pathname === link.href ? 'bg-white text-green-700 font-semibold' : ''
+                  }`}
+                >
+                  {link.label}
+                </span>
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div className="mt-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <img
+                src="/coach-avatar.jpg"
+                alt="Coach Adam"
+                className="w-10 h-10 rounded-full border-2 border-white"
+              />
+              <div>
+                <div className="font-bold text-sm">Coach Adam</div>
+                <div className="w-2 h-2 bg-green-400 rounded-full mt-1" />
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="ml-4 bg-white text-green-700 px-3 py-1 rounded text-sm hover:bg-green-100 transition-all"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main content */}
+      <main className="flex-1 p-6 overflow-auto">{children}</main>
     </div>
   )
-}
-
-const styles = {
-  nav: {
-    display: 'flex', justifyContent: 'space-between',
-    padding: '1rem 2rem', background: '#333', color: '#fff'
-  },
-  link: {
-    color: '#fff', marginRight: '1rem', textDecoration: 'none'
-  },
-  logout: {
-    background: '#e53e3e', color: '#fff', border: 'none',
-    padding: '0.5rem 1rem', borderRadius: '5px', cursor: 'pointer'
-  }
 }
