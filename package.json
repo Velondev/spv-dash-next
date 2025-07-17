@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "build:analyze": "ANALYZE=true next build",
-    "export": "next export",
+    // "export": "next export",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .next out"
   },
