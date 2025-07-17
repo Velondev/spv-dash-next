@@ -233,6 +233,14 @@
     transform: translateY(0);
     box-shadow: var(--shadow);
   }
+  /* sidebar specific styles */
+  .sidebar {
+  @apply fixed top-0 left-0 h-full w-64 bg-gradient-to-b from-green-700 to-rose-300 p-6 flex flex-col;
+}
+
+.sidebar-header {
+  @apply text-center;
+}
   
   /* Chart color utilities */
   .chart-1 { background-color: hsl(var(--chart-1)); }
