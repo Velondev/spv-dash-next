@@ -33,34 +33,42 @@ export default function AdminWorkouts() {
     if (!title || !zwoFile) {
       setMessage('Titel und .zwo-Datei sind erforderlich.')
       return
+
+      
     }
 
-    const reader = new FileReader()
-    reader.onload = async (event) => {
-      const zwoContent = event.target?.result as string
-
-      const { error } = await supabase.from('workouts').insert([
-        {
-          title,
-          description,
-          zwo_content: zwoContent,
-          created_by: user?.id
-        }
-      ])
-
-      if (error) {
-        console.error(error)
-        setMessage('Fehler beim Upload.')
-      } else {
-        setMessage('Workout erfolgreich hochgeladen!')
-        setTitle('')
-        setDescription('')
-        setZwoFile(null)
-      }
-    }
-
-    reader.readAsText(zwoFile)
+  if (!user) {
+    alert('Du musst eingeloggt sein.')
+    return
   }
+
+  const reader = new FileReader()
+
+  reader.onload = async (e) => {
+    const content = e.target?.result as string
+
+    const { data, error } = await supabase.from('workouts').insert([
+      {
+        title: name,
+        description: description,
+        zwo_content: workout,
+        created_by: author,
+      },
+    ])
+
+    if (error) {
+      console.error('Fehler beim Hochladen:', error.message)
+      alert('Upload fehlgeschlagen')
+    } else {
+      alert('Upload erfolgreich!')
+      setFile(null)
+      setTitle('')
+      setDescription('')
+    }
+  }
+
+  reader.readAsText(file)
+}
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-card border border-border rounded-xl shadow-custom-lg">
