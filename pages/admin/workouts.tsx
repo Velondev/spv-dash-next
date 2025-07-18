@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 export default function AdminWorkouts() {
   const router = useRouter()
   const [user, setUser] = useState(null)
-  const [file, setFile] = useState<File | null>(null)
   const [description, setDescription] = useState('')
   const [title, setTitle] = useState('')
   const [zwoFile, setZwoFile] = useState<File | null>(null)
@@ -62,13 +61,13 @@ export default function AdminWorkouts() {
       alert('Upload fehlgeschlagen')
     } else {
       alert('Upload erfolgreich!')
-      setFile(null)
+      setZwoFile(null)
       setTitle('')
       setDescription('')
     }
   }
 
-  reader.readAsText(file)
+  reader.readAsText(zwoFile)
 }
 
   return (
