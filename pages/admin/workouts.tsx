@@ -18,8 +18,8 @@ export default function AdminWorkouts() {
       } else {
         setUser(session.user)
         // Optional: Admin-E-Mail check
-        const isAdmin = ['admin@example.com'].includes(session.user.email)
-        if (!isAdmin) router.push('/dashboard')
+        // const isAdmin = ['admin@example.com'].includes(session.user.email)
+        // if (!isAdmin) router.push('/dashboard')
       }
     }
 
