@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 export default function AdminWorkouts() {
   const router = useRouter()
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
+  const [file, setFile] = useState<File | null>(null)
   const [description, setDescription] = useState('')
   const [zwoFile, setZwoFile] = useState<File | null>(null)
   const [message, setMessage] = useState<string | null>(null)
