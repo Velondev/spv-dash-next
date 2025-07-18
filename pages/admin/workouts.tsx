@@ -49,10 +49,10 @@ export default function AdminWorkouts() {
 
     const { data, error } = await supabase.from('workouts').insert([
       {
-        title: name,
-        description: description,
-        zwo_content: workout,
-        created_by: author,
+    title: title,
+    description: description,
+    zwo_content: content,
+    created_by: user.id,
       },
     ])
 
