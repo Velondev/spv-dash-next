@@ -7,6 +7,7 @@ export default function AdminWorkouts() {
   const [user, setUser] = useState(null)
   const [file, setFile] = useState<File | null>(null)
   const [description, setDescription] = useState('')
+  const [title, setTitle] = useState('')
   const [zwoFile, setZwoFile] = useState<File | null>(null)
   const [message, setMessage] = useState<string | null>(null)
 
