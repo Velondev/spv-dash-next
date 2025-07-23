@@ -78,7 +78,7 @@ export default function WorkoutList() {
                   weightedPower += d * p
                 }
               }
-            })
+            )}
           }
         } catch (e) {
           console.warn('Parsing-Fehler:', e)
