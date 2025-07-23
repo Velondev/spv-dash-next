@@ -36,10 +36,14 @@ export default function WorkoutList() {
         return
       }
 
-      const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '', parseAttributeValue: true })
+      const parser = new XMLParser({
+        ignoreAttributes: false,
+        attributeNamePrefix: '',
+        parseAttributeValue: true
+      })
 
       const enriched = data.map((w) => {
-        let duration = 0
+        let totalSeconds = 0
         let weightedPower = 0
 
         try {
@@ -48,11 +52,33 @@ export default function WorkoutList() {
 
           for (const [tag, segment] of Object.entries(segments)) {
             const items = Array.isArray(segment) ? segment : [segment]
+
             items.forEach((item: any) => {
-              const d = parseFloat(item.Duration || item.duration || item.OnDuration || 0)
-              const p = parseFloat(item.Power || item.PowerLow || item.power || 0)
-              duration += d
-              weightedPower += d * p
+              const repeat = Number(item.repeat) || 1
+
+              const d =
+                Number(item.Duration) ||
+                Number(item.duration) ||
+                Number(item.OnDuration) ||
+                0
+
+              const p =
+                Number(item.Power) ||
+                Number(item.PowerLow) ||
+                Number(item.power) ||
+                0
+
+              const effectiveDuration = d * repeat
+              totalSeconds += effectiveDuration
+              weightedPower += effectiveDuration * p
+
+              // Falls OffDuration/PowerResting etc. vorhanden sind, mit einrechnen
+              if (item.OffDuration && item.PowerResting) {
+                const restD = Number(item.OffDuration) * repeat
+                const restP = Number(item.PowerResting)
+                totalSeconds += restD
+                weightedPower += restD * restP
+              }
             })
           }
         } catch (e) {
@@ -61,8 +87,8 @@ export default function WorkoutList() {
 
         return {
           ...w,
-          durationMin: duration ? Math.round(duration / 60) : 0,
-          intensityFactor: duration ? +(weightedPower / duration).toFixed(2) : 0,
+          durationMin: totalSeconds ? Math.round(totalSeconds / 60) : 0,
+          intensityFactor: totalSeconds ? +(weightedPower / totalSeconds).toFixed(2) : 0,
         }
       })
 
@@ -132,3 +158,4 @@ export default function WorkoutList() {
     </div>
   )
 }
+
