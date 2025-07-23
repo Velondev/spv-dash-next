@@ -46,43 +46,43 @@ export default function WorkoutList() {
         let totalSeconds = 0
         let weightedPower = 0
 
-        try {
-          const obj = parser.parse(w.zwo_content)
-          const segments = obj?.workout_file?.workout || {}
+try {
+  const obj = parser.parse(w.zwo_content)
+  const segments = obj?.workout_file?.workout || {}
 
-          for (const [tag, segment] of Object.entries(segments)) {
-            const items = Array.isArray(segment) ? segment : [segment]
+  for (const [tag, segment] of Object.entries(segments)) {
+    const items = Array.isArray(segment) ? segment : [segment]
 
-            items.forEach((item: any) => {
-                 const repeat = Number(item.repeat) || Number(item.Repeat) || 0
-                
-                // Standardwerte
-                const d = Number(item.Duration) || Number(item.duration) || 0
-                const p = Number(item.Power) || Number(item.power) || 0
-                
-                // Intervall-Blöcke
-                const onDuration = Number(item.OnDuration) || 0
-                const offDuration = Number(item.OffDuration) || 0
-                const onPower = Number(item.OnPower) || 0
-                const offPower = Number(item.OffPower) || 0
-                
-                // Logik
-                if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
-                  const effectiveDuration = d + ((onDuration + offDuration) * repeat)
-                  const effectiveWeightedPower =
-                   d * p + ((onDuration * onPower + offDuration * offPower) * repeat)
-                  totalSeconds += effectiveDuration
-                  weightedPower += effectiveWeightedPower
-                } else if (repeat <= 0 && d > 0) {
-                  totalSeconds += d
-                  weightedPower += d * p
-                }
-              }
-            )}
-          }
-        } catch (e) {
-          console.warn('Parsing-Fehler:', e)
-        }
+    items.forEach((item: any) => {
+      const repeat = Number(item.repeat) || Number(item.Repeat) || 0
+
+      // Standardwerte
+      const d = Number(item.Duration) || Number(item.duration) || 0
+      const p = Number(item.Power) || Number(item.power) || 0
+
+      // Intervall-Blöcke
+      const onDuration = Number(item.OnDuration) || 0
+      const offDuration = Number(item.OffDuration) || 0
+      const onPower = Number(item.OnPower) || 0
+      const offPower = Number(item.OffPower) || 0
+
+      // Logik
+      if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
+        const effectiveDuration = d + ((onDuration + offDuration) * repeat)
+        const effectiveWeightedPower =
+          d * p + ((onDuration * onPower + offDuration * offPower) * repeat)
+        totalSeconds += effectiveDuration
+        weightedPower += effectiveWeightedPower
+      } else if (repeat <= 0 && d > 0) {
+        totalSeconds += d
+        weightedPower += d * p
+      }
+    }) // ← forEach korrekt geschlossen
+  } // ← for-of korrekt geschlossen
+} catch (e) {
+  console.warn('Parsing-Fehler:', e)
+}
+
 
         return {
           ...w,
