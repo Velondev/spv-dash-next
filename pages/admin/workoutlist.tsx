@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../utils/supabaseClient'
 import { useRouter } from 'next/router'
+import { XMLParser } from 'fast-xml-parser'
 
 type Workout = {
   id: string
@@ -9,26 +10,63 @@ type Workout = {
   description: string
   created_at: string
   is_active: boolean
+  zwo_content: string
+}
+
+type ParsedWorkout = Workout & {
+  durationMin: number
+  intensityFactor: number
 }
 
 export default function WorkoutList() {
   const router = useRouter()
-  const [workouts, setWorkouts] = useState<Workout[]>([])
+  const [workouts, setWorkouts] = useState<ParsedWorkout[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchWorkouts = async () => {
       const { data, error } = await supabase
         .from('workouts')
-        .select('id, title, description, created_at, is_active')
+        .select('id, title, description, created_at, is_active, zwo_content')
         .order('created_at', { ascending: false })
 
-      if (error) {
-        console.error('Fehler beim Laden der Workouts:', error.message)
-      } else {
-        setWorkouts(data || [])
+      if (error || !data) {
+        console.error('Fehler beim Laden der Workouts:', error?.message)
+        setLoading(false)
+        return
       }
 
+      const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '', parseAttributeValue: true })
+
+      const enriched = data.map((w) => {
+        let duration = 0
+        let weightedPower = 0
+
+        try {
+          const obj = parser.parse(w.zwo_content)
+          const segments = obj?.workout_file?.workout || {}
+
+          for (const [tag, segment] of Object.entries(segments)) {
+            const items = Array.isArray(segment) ? segment : [segment]
+            items.forEach((item: any) => {
+              const d = parseFloat(item.Duration || item.duration || item.OnDuration || 0)
+              const p = parseFloat(item.Power || item.PowerLow || item.power || 0)
+              duration += d
+              weightedPower += d * p
+            })
+          }
+        } catch (e) {
+          console.warn('Parsing-Fehler:', e)
+        }
+
+        return {
+          ...w,
+          durationMin: duration ? Math.round(duration / 60) : 0,
+          intensityFactor: duration ? +(weightedPower / duration).toFixed(2) : 0,
+        }
+      })
+
+      setWorkouts(enriched)
       setLoading(false)
     }
 
@@ -51,16 +89,19 @@ export default function WorkoutList() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-card border border-border rounded-xl shadow-custom-lg">
+    <div className="max-w-6xl mx-auto mt-10 p-6 bg-card border border-border rounded-xl shadow-custom-lg">
       <h1 className="text-2xl font-bold mb-6">Workoutliste (Admin)</h1>
 
       {loading ? (
         <p>Lade Workouts…</p>
       ) : (
-        <table className="w-full text-left">
+        <table className="w-full text-left text-sm">
           <thead>
             <tr>
               <th className="py-2">Titel</th>
+              <th>Beschreibung</th>
+              <th>Dauer (min)</th>
+              <th>IF</th>
               <th>Erstellt</th>
               <th>Aktiv</th>
               <th></th>
@@ -70,6 +111,9 @@ export default function WorkoutList() {
             {workouts.map((w) => (
               <tr key={w.id} className="border-t">
                 <td className="py-2">{w.title}</td>
+                <td>{w.description}</td>
+                <td>{w.durationMin}</td>
+                <td>{w.intensityFactor}</td>
                 <td>{new Date(w.created_at).toLocaleDateString()}</td>
                 <td>{w.is_active ? '✅' : '—'}</td>
                 <td>
