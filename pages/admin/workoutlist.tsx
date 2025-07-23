@@ -87,7 +87,7 @@ export default function WorkoutList() {
         return {
           ...w,
           durationMin: totalSeconds ? Math.round(totalSeconds / 60) : 0,
-          intensityFactor: totalSeconds ? +(weightedPower / totalSeconds).toFixed(2) : 0,
+          intensityFactor: totalSeconds ? +(weightedPower / totalSeconds).toFixed(2) : 0
         }
       })
 
