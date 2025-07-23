@@ -54,30 +54,29 @@ export default function WorkoutList() {
             const items = Array.isArray(segment) ? segment : [segment]
 
             items.forEach((item: any) => {
-              const repeat = Number(item.repeat) || 1
-
-              const d =
-                Number(item.Duration) ||
-                Number(item.duration) ||
-                Number(item.OnDuration) ||
-                0
-
-              const p =
-                Number(item.Power) ||
-                Number(item.PowerLow) ||
-                Number(item.power) ||
-                0
-
-              const effectiveDuration = d * repeat
-              totalSeconds += effectiveDuration
-              weightedPower += effectiveDuration * p
-
-              // Falls OffDuration/PowerResting etc. vorhanden sind, mit einrechnen
-              if (item.OffDuration && item.PowerResting) {
-                const restD = Number(item.OffDuration) * repeat
-                const restP = Number(item.PowerResting)
-                totalSeconds += restD
-                weightedPower += restD * restP
+                 const repeat = Number(item.repeat) || Number(item.Repeat) || 0
+                
+                // Standardwerte
+                const d = Number(item.Duration) || Number(item.duration) || 0
+                const p = Number(item.Power) || Number(item.power) || 0
+                
+                // Intervall-Blöcke
+                const onDuration = Number(item.OnDuration) || 0
+                const offDuration = Number(item.OffDuration) || 0
+                const onPower = Number(item.OnPower) || 0
+                const offPower = Number(item.OffPower) || 0
+                
+                // Logik
+                if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
+                  const effectiveDuration = d + ((onDuration + offDuration) * repeat)
+                  const effectiveWeightedPower =
+                   d * p + ((onDuration * onPower + offDuration * offPower) * repeat)
+                  totalSeconds += effectiveDuration
+                  weightedPower += effectiveWeightedPower
+                } else if (repeat <= 0 && d > 0) {
+                  totalSeconds += d
+                  weightedPower += d * p
+                }
               }
             })
           }
