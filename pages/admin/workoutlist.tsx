@@ -56,7 +56,7 @@ try {
     items.forEach((item: any) => {
       const repeat = Number(item.repeat) || Number(item.Repeat) || 0
 
-      // Standardwerte
+      // Standardwerte (kein Intervallblock)
       const d = Number(item.Duration) || Number(item.duration) || 0
       const p = Number(item.Power) || Number(item.power) || 0
 
@@ -66,29 +66,33 @@ try {
       const onPower = Number(item.OnPower) || 0
       const offPower = Number(item.OffPower) || 0
 
-      // Logik
+ // 1. Intervall mit Wiederholung (z.B. <IntervalsT>)
       if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
-        const effectiveDuration = d + ((onDuration + offDuration) * repeat)
-        const effectiveWeightedPower =
-          d * p + ((onDuration * onPower + offDuration * offPower) * repeat)
-        totalSeconds += effectiveDuration
-        weightedPower += effectiveWeightedPower
-      } else if (repeat <= 0 && d > 0) {
+        const totalRepeatDuration = (onDuration + offDuration) * repeat
+        const totalRepeatPower = (onDuration * onPower + offDuration * offPower) * repeat
+
+        // Gesamt, wenn Intervalst vorhanen
+        totalSeconds += d + totalRepeatDuration
+        weightedPower += d * p + totalRepeatPower
+
+      // 2. Normaler Block ohne repeat
+      } else if (d > 0) {
         totalSeconds += d
         weightedPower += d * p
       }
-    }) // ← forEach korrekt geschlossen
-  } // ← for-of korrekt geschlossen
+    })
+  }
 } catch (e) {
   console.warn('Parsing-Fehler:', e)
 }
 
+// Rückgabe mit berechnetem IF (zeitgewichteter Durchschnitt aller %-Werte)
+return {
+  ...w,
+  durationMin: totalSeconds ? Math.round(totalSeconds / 60) : 0,
+  intensityFactor: totalSeconds ? +(weightedPower / totalSeconds).toFixed(2) : 0
+}
 
-        return {
-          ...w,
-          durationMin: totalSeconds ? Math.round(totalSeconds / 60) : 0,
-          intensityFactor: totalSeconds ? +(weightedPower / totalSeconds).toFixed(2) : 0
-        }
       })
 
       setWorkouts(enriched)
