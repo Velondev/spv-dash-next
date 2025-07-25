@@ -53,19 +53,20 @@ try {
   for (const [tag, segment] of Object.entries(segments)) {
     const items = Array.isArray(segment) ? segment : [segment]
 
-    items.forEach((item: any) => {
-      const repeat = Number(item.repeat) || Number(item.Repeat) || 0
+ items.forEach((item: any) => {
+    const repeat = Number(item.repeat) || Number(item.Repeat) || 0
 
-      // Standardwerte (kein Intervallblock)
-      const d = Number(item.Duration) || Number(item.duration) || 0
-      const p = Number(item.Power) || Number(item.power) || 0
+   // Normale Blöcke
+    const d = Number(item.Duration) || Number(item.duration) || 0
+    const p = Number(item.Power) || Number(item.power) || 0
 
-      // Intervall-Blöcke
-      const onDuration = Number(item.OnDuration) || 0
-      const offDuration = Number(item.OffDuration) || 0
-      const onPower = Number(item.OnPower) || 0
-      const offPower = Number(item.OffPower) || 0
+   // Intervall-Blöcke
+    const onDuration = Number(item.OnDuration) || 0
+    const offDuration = Number(item.OffDuration) || 0
+    const onPower = Number(item.OnPower) || 0
+    const offPower = Number(item.OffPower) || 0
 
+  
  // 1. Intervall mit Wiederholung (z.B. <IntervalsT>)
       if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
         const totalRepeatDuration = (onDuration + offDuration) * repeat
