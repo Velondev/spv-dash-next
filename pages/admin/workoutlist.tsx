@@ -72,7 +72,7 @@ try {
     let localWeightedPower = 0
     
     if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
-      localSeconds += (onDuration + offDuration) * repeat
+      localSeconds += ((onDuration + offDuration) * repeat) + d
       localWeightedPower += (onDuration * onPower * repeat) + (offDuration * offPower * repeat)
     }
     
