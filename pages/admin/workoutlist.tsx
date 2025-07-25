@@ -72,16 +72,17 @@ try {
     let localWeightedPower = 0
     
     if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
-      localSeconds += ((onDuration + offDuration) * repeat) + d
+      const totalRepeatDuration = ((onDuration + offDuration) * repeat)
       localWeightedPower += (onDuration * onPower * repeat) + (offDuration * offPower * repeat)
+      totalSeconds += totalRepeatDuration + d
     }
     
 if (d > 0 && p > 0) {
   localSeconds += d
   localWeightedPower += d * p
+  totalSeconds += localSeconds
 }
 
-totalSeconds += localSeconds
 weightedPower += localWeightedPower
    
     })
