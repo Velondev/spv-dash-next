@@ -68,19 +68,22 @@ try {
 
   
  // 1. Intervall mit Wiederholung (z.B. <IntervalsT>)
-      if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
-        const totalRepeatDuration = (onDuration + offDuration) * repeat
-        const totalRepeatPower = (onDuration * onPower + offDuration * offPower) * repeat
+    let localSeconds = 0
+    let localWeightedPower = 0
+    
+    if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
+      localSeconds += (onDuration + offDuration) * repeat
+      localWeightedPower += (onDuration * onPower * repeat) + (offDuration * offPower * repeat)
+    }
+    
+if (d > 0 && p > 0) {
+  localSeconds += d
+  localWeightedPower += d * p
+}
 
-        // Gesamt, wenn Intervalst vorhanen
-        totalSeconds += d + totalRepeatDuration
-        weightedPower += d * p + totalRepeatPower
-
-      // 2. Normaler Block ohne repeat
-      } else if (d > 0) {
-        totalSeconds += d
-        weightedPower += d * p
-      }
+totalSeconds += localSeconds
+weightedPower += localWeightedPower
+   
     })
   }
 } catch (e) {
