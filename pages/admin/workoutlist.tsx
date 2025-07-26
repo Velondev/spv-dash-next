@@ -66,25 +66,20 @@ try {
     const onPower = Number(item.OnPower) || 0
     const offPower = Number(item.OffPower) || 0
 
-  
- // 1. Intervall mit Wiederholung (z.B. <IntervalsT>)
-    let localSeconds = 0
-    let localWeightedPower = 0
-    
-    if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
-      const totalRepeatDuration = ((onDuration + offDuration) * repeat)
-      localWeightedPower += (onDuration * onPower * repeat) + (offDuration * offPower * repeat)
-      totalSeconds += totalRepeatDuration + d
-    }
-    
-if (d > 0 && p > 0) {
-  localSeconds += d
-  localWeightedPower += d * p
-  totalSeconds += localSeconds
-}
+  // 1. Intervall mit Wiederholung (z.B. <IntervalsT>)
+      if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
+        const totalRepeatDuration = (onDuration + offDuration) * repeat
+        const totalRepeatPower = (onDuration * onPower * repeat) + (offDuration * offPower * repeat)Power) * repeat
 
-weightedPower += localWeightedPower
-   
+        // Gesamt, wenn Intervalst vorhanen
+        totalSeconds += d + totalRepeatDuration
+        weightedPower += (d * p) + totalRepeatPower
+
+      // 2. Normaler Block ohne repeat
+      } else if (d > 0) {
+        totalSeconds += d
+        weightedPower += d * p
+      }
     })
   }
 } catch (e) {
