@@ -69,7 +69,7 @@ try {
   // 1. Intervall mit Wiederholung (z.B. <IntervalsT>)
       if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
         const totalRepeatDuration = (onDuration + offDuration) * repeat
-        const totalRepeatPower = (onDuration * onPower * repeat) + (offDuration * offPower * repeat)Power) * repeat
+        const totalRepeatPower = (onDuration * onPower * repeat) + (offDuration * offPower * repeat)
 
         // Gesamt, wenn Intervalst vorhanen
         totalSeconds += d + totalRepeatDuration
