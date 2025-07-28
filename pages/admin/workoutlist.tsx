@@ -47,53 +47,59 @@ export default function WorkoutList() {
         let weightedPower = 0
 
 try {
-  const obj = parser.parse(w.zwo_content)
-  const segments = obj?.workout_file?.workout || {}
+    const obj = parser.parse(w.zwo_content)
+    const segments = obj?.workout_file?.workout || {}
 
-  for (const [tag, segment] of Object.entries(segments)) {
-    const items = Array.isArray(segment) ? segment : [segment]
+    for (const [tag, segment] of Object.entries(segments)) {
+      const items = Array.isArray(segment) ? segment : [segment]
 
- items.forEach((item: any) => {
-    const repeat = Number(item.repeat) || Number(item.Repeat) || 0
+      items.forEach((item: any) => {
+        const repeat = Number(item.Repeat) || Number(item.repeat) || 0
 
-   // Normale Blöcke
-    const d = Number(item.Duration) || Number(item.duration) || 0
-    const p = Number(item.Power) || Number(item.power) || 0
+        // Normale Blöcke
+        const d = Number(item.Duration) || Number(item.duration) || 0
+        const p =
+          Number(item.Power) ||
+          Number(item.power) ||
+          Number(item.PowerLow) || 0
 
-   // Intervall-Blöcke
-    const onDuration = Number(item.OnDuration) || 0
-    const offDuration = Number(item.OffDuration) || 0
-    const onPower = Number(item.OnPower) || 0
-    const offPower = Number(item.OffPower) || 0
+        // Intervall-Blöcke
+        const onDuration = Number(item.OnDuration) || 0
+        const offDuration = Number(item.OffDuration) || 0
+        const onPower = Number(item.OnPower) || 0
+        const offPower = Number(item.OffPower) || 0
 
-  // 1. Intervall mit Wiederholung (z.B. <IntervalsT>)
-      if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
-        const totalRepeatDuration = (onDuration + offDuration) * repeat
-        const totalRepeatPower = (onDuration * onPower * repeat) + (offDuration * offPower * repeat)
+        let blockSeconds = 0
+        let blockWeighted = 0
 
-        // Gesamt, wenn Intervalst vorhanen
-        totalSeconds += d + totalRepeatDuration
-        weightedPower +=  totalRepeatPower
+        if (repeat > 0 && (onDuration > 0 || offDuration > 0)) {
+          const intervalSeconds = (onDuration + offDuration) * repeat
+          const intervalWeighted =
+            (onDuration * onPower + offDuration * offPower) * repeat
 
-      // 2. Normaler Block ohne repeat
-      } else if (d > 0) {
-        totalSeconds += d
-        weightedPower += d * p
-      }
-    })
-  }
-} catch (e) {
-  console.warn('Parsing-Fehler:', e)
-}
+          blockSeconds += d + intervalSeconds
+          blockWeighted += d * p + intervalWeighted
+        } else if (d > 0) {
+          blockSeconds += d
+          blockWeighted += d * p
+        }
 
-// Rückgabe mit berechnetem IF (zeitgewichteter Durchschnitt aller %-Werte)
-return {
-  ...w,
-  durationMin: totalSeconds ? Math.round(totalSeconds / 60) : 0,
-  intensityFactor: totalSeconds ? +(weightedPower / totalSeconds).toFixed(2) : 0
-}
-
+        totalSeconds += blockSeconds
+        weightedPower += blockWeighted
       })
+    }
+  } catch (e) {
+    console.warn('Parsing-Fehler:', e)
+  }
+
+  return {
+    ...w,
+    durationMin: totalSeconds ? Math.round(totalSeconds / 60) : 0,
+    intensityFactor: totalSeconds
+      ? +(weightedPower / totalSeconds).toFixed(2)
+      : 0,
+  }
+})
 
       setWorkouts(enriched)
       setLoading(false)
