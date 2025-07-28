@@ -73,7 +73,7 @@ try {
 
         // Gesamt, wenn Intervalst vorhanen
         totalSeconds += d + totalRepeatDuration
-        weightedPower += (d * p) + totalRepeatPower
+        weightedPower +=  totalRepeatPower
 
       // 2. Normaler Block ohne repeat
       } else if (d > 0) {
