@@ -6,6 +6,9 @@ export type WorkoutSegment = {
   power?: number        // % FTP
   powerLow?: number
   powerHigh?: number
+
+  }
+
   export function parseZwoToJson(zwo: string): {
   description?: string
   sportType?: string
