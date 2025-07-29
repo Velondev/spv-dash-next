@@ -192,8 +192,8 @@ try {
     <div className="mt-10">
       <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
      <WorkoutChart zwo={workouts.find(w => w.id === selectedWorkoutId)?.zwoRaw || ''} />
-    </div>
-      )}
-    </div> 
-  )
+  </div>
+    )}
+  </div> // ← Ende des Wrappers
+)
 }
