@@ -1,17 +1,18 @@
 import { XMLParser } from 'fast-xml-parser'
 
 export type WorkoutSegment = {
-  type: string          // z. B. 'Warmup', 'IntervalsT', 'Cooldown', 'FreeRide', 'SteadyState', 'textevent'
+  type: string          // z. B. 'Warmup', 'IntervalsT', 'Cooldown', etc.
   duration?: number     // Sekunden
-  onDuration?: number   // für IntervalsT
-  offDuration?: number  // für IntervalsT
-  power?: number        // % FTP
+  onDuration?: number
+  offDuration?: number
+  power?: number
   powerLow?: number
   powerHigh?: number
+  cadence?: number
+  repeat?: number
+}
 
-  }
-
- export function parseZwoToJson(zwo: string): {
+export function parseZwoToJson(zwo: string): {
   title?: string
   author?: string
   description?: string
@@ -20,58 +21,58 @@ export type WorkoutSegment = {
   duration: number
   intensityFactor: number
 } {
-  // deine Logik hier...
-
-  return {
-    title: 'Beispiel',
-    author: 'Autor',
-    description: 'Beschreibung',
-    sportType: 'bike',
-    segments: [],
-    duration: 0,
-    intensityFactor: 0,
-  }
-}
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: '',
+    parseAttributeValue: true,
+  })
 
   const obj = parser.parse(zwo)
   const wf = obj.workout_file || {}
+
   const meta = {
-  export function parseZwoToJson(zwo: string): {
+    title: wf.name,
+    author: wf.author,
+    description: wf.description,
+    sportType: wf.sportType,
+  }
+
+  const segments: WorkoutSegment[] = []
+  const workout = wf.workout
+
+  if (workout) {
+    for (const [tag, content] of Object.entries(workout)) {
+      const items = Array.isArray(content) ? content : [content]
+
+      items.forEach((el: any) => {
         const seg: WorkoutSegment = { type: tag }
+
         Object.entries(el).forEach(([key, val]) => {
-          const lk = key.charAt(0).toLowerCase() + key.slice(1)
-          if (lk === 'duration' || lk === 'onDuration' || lk === 'offDuration')
-            seg.duration = Number(val)
-          else if (lk.includes('Power') || lk === 'power')
-            seg[lk] = Number(val)
-          else if (lk === 'cadence' || lk === 'cadenceResting')
-            seg.cadence = Number(val)
-          else if (lk === 'repeat')
-            seg.repeat = Number(val)
-          // weitere Attribute verarbeiten, z. B. textevent...
-          if (lk === 'duration') seg.duration = Number(val)
-          else if (lk === 'onduration') seg.onDuration = Number(val)
-          else if (lk === 'offduration') seg.offDuration = Number(val)
-          else if (lk === 'power') seg.power = Number(val)
-          else if (lk === 'powerlow') seg.powerLow = Number(val)
-          else if (lk === 'powerhigh') seg.powerHigh = Number(val)
-          else if (lk === 'cadence' || lk === 'cadenceresting') seg.cadence = Number(val)
-          else if (lk === 'repeat') seg.repeat = Number(val)
+          const lk = key.toLowerCase()
+          const numVal = Number(val)
+
+          if (lk === 'duration') seg.duration = numVal
+          else if (lk === 'onduration') seg.onDuration = numVal
+          else if (lk === 'offduration') seg.offDuration = numVal
+          else if (lk === 'power') seg.power = numVal
+          else if (lk === 'powerlow') seg.powerLow = numVal
+          else if (lk === 'powerhigh') seg.powerHigh = numVal
+          else if (lk === 'cadence' || lk === 'cadenceresting') seg.cadence = numVal
+          else if (lk === 'repeat') seg.repeat = numVal
         })
+
         segments.push(seg)
       })
     }
   }
 
-  return { ...meta, segments }
-  // Berechnung von Dauer und Intensitätsfaktor
+  // Berechnung von Dauer und Intensitätsfaktor (zeitgewichteter Durchschnitt)
   let totalDuration = 0
   let weightedPowerSum = 0
 
   for (const seg of segments) {
     let duration = seg.duration || 0
 
-    // Sonderfall für IntervalsT
     if (
       seg.type === 'IntervalsT' &&
       seg.repeat &&
@@ -99,6 +100,6 @@ export type WorkoutSegment = {
     ...meta,
     segments,
     duration: totalDuration,
-    intensityFactor
+    intensityFactor,
   }
 }
