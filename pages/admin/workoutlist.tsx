@@ -163,16 +163,16 @@ try {
                   >
                     {w.is_active ? 'Deaktivieren' : 'Aktivieren'}
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
           <div className="mt-10">
           <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
           {workouts[0]?.zwoRaw && (
           <WorkoutChart zwo={workouts[0].zwoRaw} />
-      )}
     </div>
   </>
 )}
