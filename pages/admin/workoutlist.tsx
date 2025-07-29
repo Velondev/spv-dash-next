@@ -149,35 +149,35 @@ try {
         </tr>
       </thead>
       <tbody>
-            {workouts.map((w) => (
-              <tr key={w.id} className="border-t">
-                <td className="py-2">{w.title}</td>
-                <td>{w.description}</td>
-                <td>{w.durationMin}</td>
-                <td>{w.intensityFactor}</td>
-                <td>{new Date(w.created_at).toLocaleDateString()}</td>
-                <td>{w.is_active ? '✅' : '—'}</td>
-                <td>
-                  <button
-                    onClick={() => toggleActive(w.id, w.is_active)}
-                    className="btn-sm"
-                  >
-                    {w.is_active ? 'Deaktivieren' : 'Aktivieren'}
-                  </button>
-              </td>
+        {workouts.map((w) => (
+          <tr key={w.id} className="border-t">
+            <td className="py-2">{w.title}</td>
+            <td>{w.description}</td>
+            <td>{w.durationMin}</td>
+            <td>{w.intensityFactor}</td>
+            <td>{new Date(w.created_at).toLocaleDateString()}</td>
+            <td>{w.is_active ? '✅' : '—'}</td>
+            <td>
+              <button
+                onClick={() => toggleActive(w.id, w.is_active)}
+                className="btn-sm"
+              >
+                {w.is_active ? 'Deaktivieren' : 'Aktivieren'}
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
     </table>
 
-          <div className="mt-10">
-          <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
-          {workouts[0]?.zwoRaw && (
-          <WorkoutChart zwo={workouts[0].zwoRaw} />
+    {/* Workout Vorschau (z.B. Chart) */}
+    <div className="mt-10">
+      <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
+      {workouts[0]?.zwoRaw && (
+        <WorkoutChart zwo={workouts[0].zwoRaw} />
+      )}
     </div>
   </>
-)}
-    </div>
-  )
-}
-
+  )}
+  </div>
+)
