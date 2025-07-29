@@ -7,6 +7,8 @@ type WorkoutSegment = {
   duration?: number
   onDuration?: number
   offDuration?: number
+  onPower?: number 
+  offPower?: number
   power?: number
   powerLow?: number
   powerHigh?: number
