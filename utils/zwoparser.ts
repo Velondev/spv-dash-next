@@ -9,18 +9,27 @@ export type WorkoutSegment = {
 
   }
 
-  export function parseZwoToJson(zwo: string): {
+ export function parseZwoToJson(zwo: string): {
+  title?: string
+  author?: string
   description?: string
   sportType?: string
   segments: WorkoutSegment[]
   duration: number
   intensityFactor: number
 } {
-  const parser = new XMLParser({
-    ignoreAttributes: false,
-    attributeNamePrefix: '',
-    parseAttributeValue: true
-  })
+  // deine Logik hier...
+
+  return {
+    title: 'Beispiel',
+    author: 'Autor',
+    description: 'Beschreibung',
+    sportType: 'bike',
+    segments: [],
+    duration: 0,
+    intensityFactor: 0,
+  }
+}
 
   const obj = parser.parse(zwo)
   const wf = obj.workout_file || {}
