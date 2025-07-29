@@ -15,7 +15,15 @@ type Segment = {
 
 type Props = {
   segments: Segment[]
+  zwo: string
 }
+
+export default function WorkoutChart({ zwo }: Props) {
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: '',
+    parseAttributeValue: true,
+  })
 
 function getPowerZoneColor(ftpPercent: number): string {
   if (ftpPercent <= 0.54) return '#666'         // Grau
