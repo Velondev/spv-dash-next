@@ -129,71 +129,77 @@ try {
     }
   }
 
-  return (
+return (
     <div className="max-w-6xl mx-auto mt-10 p-6 bg-card border border-border rounded-xl shadow-custom-lg">
       <h1 className="text-2xl font-bold mb-6">Workoutliste (Admin)</h1>
 
-{loading ? (
-  <p>Lade Workouts…</p>
-) : (
-  <>
-  <table className="w-full text-left text-sm">
-  <thead>
-    <tr>
-      <th className="py-2">Titel</th>
-      <th>Beschreibung</th>
-      <th>Dauer (min)</th>
-      <th>IF</th>
-      <th>Erstellt</th>
-      <th>Aktiv</th>
-      <th></th>
-      <th>Vorschau</th> {/* Neu */}
-    </tr>
-  </thead>
-  <tbody>
-    {workouts.map((w) => (
-      <tr key={w.id} className="border-t">
-      <td className="py-2">
-        <button
-          onClick={() => setSelectedWorkoutId(w.id)}
-          className="text-blue-600 hover:underline font-semibold transition"
-        >
-          {w.title}
-          </button>
-        </td>
-        <td>{w.description}</td>
-        <td>{w.durationMin}</td>
-        <td>{w.intensityFactor}</td>
-        <td>{new Date(w.created_at).toLocaleDateString()}</td>
-        <td>{w.is_active ? '✅' : '—'}</td>
-        <td>
-          <button
-            onClick={() => toggleActive(w.id, w.is_active)}
-            className="btn-sm"
-          >
-            {w.is_active ? 'Deaktivieren' : 'Aktivieren'}
-          </button>
-        </td>
-        <td>
-          <button
-            onClick={() => setSelectedWorkoutId(w.id)}
-            className="btn-sm text-blue-500"
-          >
-            Anzeigen
-          </button>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+      {loading ? (
+        <p>Lade Workouts…</p>
+      ) : (
+        <>
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr>
+                <th className="py-2">Titel</th>
+                <th>Beschreibung</th>
+                <th>Dauer (min)</th>
+                <th>IF</th>
+                <th>Erstellt</th>
+                <th>Aktiv</th>
+                <th></th>
+                <th>Vorschau</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workouts.map((w) => (
+                <tr key={w.id} className="border-t">
+                  <td className="py-2">
+                    <button
+                      onClick={() => setSelectedWorkoutId(w.id)}
+                      className="text-blue-600 hover:underline font-semibold transition"
+                    >
+                      {w.title}
+                    </button>
+                  </td>
+                  <td>{w.description}</td>
+                  <td>{w.durationMin}</td>
+                  <td>{w.intensityFactor}</td>
+                  <td>{new Date(w.created_at).toLocaleDateString()}</td>
+                  <td>{w.is_active ? '✅' : '—'}</td>
+                  <td>
+                    <button
+                      onClick={() => toggleActive(w.id, w.is_active)}
+                      className="btn-sm"
+                    >
+                      {w.is_active ? 'Deaktivieren' : 'Aktivieren'}
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => setSelectedWorkoutId(w.id)}
+                      className="btn-sm text-blue-500"
+                    >
+                      Anzeigen
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-    {/* Workout Vorschau (z.B. Chart) */}
-    {selectedWorkoutId && (
-    <div className="mt-10">
-      <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
-     <WorkoutChart zwo={workouts.find(w => w.id === selectedWorkoutId)?.zwoRaw || ''} />
-  </div>
-    )}
-  </div> // ← Ende des Wrappers
-)
+          {/* Workout Vorschau (z.B. Chart) */}
+          {selectedWorkoutId && (
+            <div className="mt-10">
+              <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
+              <WorkoutChart
+                zwo={
+                  workouts.find((w) => w.id === selectedWorkoutId)?.zwoRaw || ''
+                }
+              />
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  )
 }
