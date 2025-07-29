@@ -153,7 +153,14 @@ try {
   <tbody>
     {workouts.map((w) => (
       <tr key={w.id} className="border-t">
-        <td className="py-2">{w.title}</td>
+      <td className="py-2">
+        <button
+          onClick={() => setSelectedWorkoutId(w.id)}
+          className="text-blue-600 hover:underline font-semibold transition"
+        >
+          {w.title}
+          </button>
+        </td>
         <td>{w.description}</td>
         <td>{w.durationMin}</td>
         <td>{w.intensityFactor}</td>
@@ -185,10 +192,8 @@ try {
     <div className="mt-10">
       <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
      <WorkoutChart zwo={workouts.find(w => w.id === selectedWorkoutId)?.zwoRaw || ''} />
-      )}
     </div>
-  </>
-  )}
-  </div>
-)
+      )}
+    </div> 
+  )
 }
