@@ -1,6 +1,5 @@
 export type WorkoutSegment = {
   type: string          // z. B. 'Warmup', 'IntervalsT', 'Cooldown', 'FreeRide', 'SteadyState', 'textevent'
-  duration?: number     // Seconds
   duration?: number     // Sekunden
   onDuration?: number   // für IntervalsT
   offDuration?: number  // für IntervalsT
