@@ -1,3 +1,5 @@
+import { XMLParser } from 'fast-xml-parser'
+
 export type WorkoutSegment = {
   type: string          // z. B. 'Warmup', 'IntervalsT', 'Cooldown', 'FreeRide', 'SteadyState', 'textevent'
   duration?: number     // Sekunden
