@@ -4,6 +4,9 @@ import { supabase } from '../../utils/supabaseClient'
 import { useRouter } from 'next/router'
 import { XMLParser } from 'fast-xml-parser'
 
+import dynamic from 'next/dynamic'
+const WorkoutChart = dynamic(() => import('../../components/WorkoutChart'), { ssr: false })
+
 type Workout = {
   id: string
   title: string
@@ -16,6 +19,7 @@ type Workout = {
 type ParsedWorkout = Workout & {
   durationMin: number
   intensityFactor: number
+  zwoRaw?: string
 }
 
 export default function WorkoutList() {
@@ -98,6 +102,7 @@ try {
     intensityFactor: totalSeconds
       ? +(weightedPower / totalSeconds).toFixed(2)
       : 0,
+      zwoRaw: w.zwo_content
   }
 })
 
@@ -163,7 +168,14 @@ try {
             ))}
           </tbody>
         </table>
+          <div className="mt-10">
+          <h2 className="text-xl font-bold mb-4">Workout Vorschau</h2>
+          {workouts[0]?.zwoRaw && (
+          <WorkoutChart zwo={workouts[0].zwoRaw} />
       )}
+    </div>
+  </>
+)}
     </div>
   )
 }
