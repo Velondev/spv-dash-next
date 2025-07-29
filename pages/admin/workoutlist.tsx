@@ -132,22 +132,23 @@ try {
     <div className="max-w-6xl mx-auto mt-10 p-6 bg-card border border-border rounded-xl shadow-custom-lg">
       <h1 className="text-2xl font-bold mb-6">Workoutliste (Admin)</h1>
 
-      {loading ? (
-        <p>Lade Workouts…</p>
-      ) : (
-        <table className="w-full text-left text-sm">
-          <thead>
-            <tr>
-              <th className="py-2">Titel</th>
-              <th>Beschreibung</th>
-              <th>Dauer (min)</th>
-              <th>IF</th>
-              <th>Erstellt</th>
-              <th>Aktiv</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+{loading ? (
+  <p>Lade Workouts…</p>
+) : (
+  <>
+    <table className="w-full text-left text-sm">
+      <thead>
+        <tr>
+          <th className="py-2">Titel</th>
+          <th>Beschreibung</th>
+          <th>Dauer (min)</th>
+          <th>IF</th>
+          <th>Erstellt</th>
+          <th>Aktiv</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
             {workouts.map((w) => (
               <tr key={w.id} className="border-t">
                 <td className="py-2">{w.title}</td>
