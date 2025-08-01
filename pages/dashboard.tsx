@@ -42,7 +42,7 @@ export default function Dashboard() {
   const REDIRECT_URI = process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI
 
   const handleStravaLogin = () => {
-    const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${STRAVA_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=read,activity:read_all`
+  const stravaAuthUrl = `https://www.strava.com/oauth/authorize?client_id=${STRAVA_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=read,activity:read_all`
     window.location.href = stravaAuthUrl
   }
 
