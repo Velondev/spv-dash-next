@@ -1,20 +1,13 @@
+// pages/api/strava/callback.ts
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios'
 import cookie from 'cookie'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { code, state } = req.query
+  const { code } = req.query
 
   if (!code || typeof code !== 'string') {
     return res.status(400).send('Code fehlt oder ungültig.')
-  }
-
-  // Cookies parsen
-  const cookies = cookie.parse(req.headers.cookie || '')
-  const expectedState = cookies.strava_oauth_state
-
-  if (!expectedState || expectedState !== state) {
-    return res.status(400).send('OAuth fehlgeschlagen: Ungültiger State.')
   }
 
   try {
@@ -27,19 +20,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { access_token, refresh_token, expires_at, athlete } = response.data
 
-    // TODO: Tokens speichern (Supabase, Session etc.)
-    console.log('Strava verbunden mit:', athlete.username)
-
-    // Optional: Cookie löschen
-    res.setHeader('Set-Cookie', cookie.serialize('strava_oauth_state', '', {
+    // Zugriffstoken als Cookie speichern (optional)
+    res.setHeader('Set-Cookie', cookie.serialize('strava_token', access_token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Lax',
       path: '/',
-      maxAge: -1,
+      maxAge: 60 * 60 * 24 * 30, // 30 Tage
     }))
 
-    // Weiterleitung nach Erfolg
+    console.log('✅ Strava verbunden mit:', athlete?.username || 'Unbekannt')
+
+    // Weiterleitung nach erfolgreicher Verbindung
     return res.redirect('/training?strava_connected=true')
   } catch (error: any) {
-    console.error('Strava Callback Fehler:', error.response?.data || error.message)
+    console.error('❌ Strava Callback Fehler:', error.response?.data || error.message)
     return res.status(500).send('OAuth fehlgeschlagen.')
   }
 }
