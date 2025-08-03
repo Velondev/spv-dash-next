@@ -49,17 +49,65 @@ export default function Training() {
         Strava Sync starten
       </button>
 
-      {selectedActivity && (
-        <div className="mt-6 bg-gray-100 p-4 rounded-md">
-          <h2 className="text-lg font-semibold mb-2">{selectedActivity.name}</h2>
-          <p><strong>Dauer:</strong> {(selectedActivity.elapsed_time / 60).toFixed(0)} Minuten</p>
-          <p><strong>NP:</strong> {selectedActivity.weighted_average_watts} W</p>
-          <p><strong>Durchschnittsleistung:</strong> {selectedActivity.average_power} W</p>
-          <p><strong>Maximalleistung:</strong> {selectedActivity.max_power} W</p>
-          <p><strong>Trittfrequenz:</strong> {selectedActivity.average_cadence}</p>
-          <p><strong>Kalorien:</strong> {Math.round(selectedActivity.kilojoules)} kcal</p>
-        </div>
-      )}
+    {selectedActivity && (
+  <div className="mt-6 bg-white border border-gray-200 rounded-md shadow-md p-6">
+    <h2 className="text-xl font-bold mb-4 text-center">{selectedActivity.name}</h2>
+
+    <div className="grid grid-cols-2 gap-6 text-center mb-6">
+      <div>
+        <p className="text-sm text-gray-500">NP</p>
+        <p className="text-xl font-semibold">{selectedActivity.weighted_average_watts} W</p>
+      </div>
+      <div>
+        <p className="text-sm text-gray-500">IF</p>
+        <p className="text-xl font-semibold">–</p> {/* optional später berechenbar */}
+      </div>
+      <div>
+        <p className="text-sm text-gray-500">TSS</p>
+        <p className="text-xl font-semibold">–</p> {/* optional später berechenbar */}
+      </div>
+      <div>
+        <p className="text-sm text-gray-500">Verstrichene Zeit</p>
+        <p className="text-xl font-semibold">
+          {Math.floor(selectedActivity.elapsed_time / 60)}:{(selectedActivity.elapsed_time % 60).toString().padStart(2, '0')}
+        </p>
+      </div>
+    </div>
+
+    <table className="table-auto w-full text-sm text-left border-t pt-4">
+      <thead className="text-gray-500">
+        <tr>
+          <th className="py-2">Metrik</th>
+          <th className="py-2">Schnitt</th>
+          <th className="py-2">Max</th>
+        </tr>
+      </thead>
+      <tbody className="font-medium">
+        <tr className="border-t">
+          <td className="py-2">Geschwindigkeit</td>
+          <td>{(selectedActivity.average_speed * 3.6).toFixed(1)} km/h</td>
+          <td>{(selectedActivity.max_speed * 3.6).toFixed(1)} km/h</td>
+        </tr>
+        <tr className="border-t">
+          <td className="py-2">Trittfrequenz</td>
+          <td>{selectedActivity.average_cadence || '–'}</td>
+          <td>–</td>
+        </tr>
+        <tr className="border-t">
+          <td className="py-2">Leistung</td>
+          <td>{selectedActivity.average_power || '–'} W</td>
+          <td>{selectedActivity.max_power || '–'} W</td>
+        </tr>
+        <tr className="border-t">
+          <td className="py-2">Kalorien</td>
+          <td>{Math.round(selectedActivity.kilojoules)} kcal</td>
+          <td>–</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)}
+
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
