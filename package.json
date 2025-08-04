@@ -19,7 +19,8 @@
     "react-dom": "18.2.0",
     "axios": "^1.6.8",
     "fast-xml-parser": "^4.3.5",
-    "cookie": "^0.5.0"
+    "cookie": "^0.5.0",
+    "js-cookie": "^3.0.5"
   },
   "devDependencies": {
     "typescript": "^5.3.3",
