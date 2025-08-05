@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useUser } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
 
 type StravaActivity = {
   id: number
@@ -38,6 +39,14 @@ export default function Training() {
       console.error('Fehler beim Laden der Aktivitäten', err)
     }
   }
+  // ✅ Auto-Fetch, wenn access_token bereits als Cookie existiert
+  useEffect(() => {
+    const token = getCookie('strava_access_token')
+    if (token) {
+      fetchStravaActivities()
+    }
+  }, [])
+
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
