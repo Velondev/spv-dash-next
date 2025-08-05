@@ -40,12 +40,12 @@ export default function Training() {
     }
   }
   // ✅ Auto-Fetch, wenn access_token bereits als Cookie existiert
-  useEffect(() => {
-    const token = getCookie('strava_access_token')
-    if (token) {
-      fetchStravaActivities()
-    }
-  }, [])
+ useEffect(() => {
+  const token = Cookies.get('strava_access_token')
+  if (token) {
+    fetchStravaActivities()
+  }
+}, [])
 
 
   return (
